@@ -41,11 +41,9 @@ internal class FaceLivenessView(context: Context, id: Int, creationParams: Map<S
                     region = creationParams["region"] as String,
                     onComplete = {
                         handler.onComplete()
-                        println("VINI: complete nativo")
                     },
                     onError = { error ->
                         handler.onError()
-                        println("VINI: error nativo")
                         println(error.message)
                     }
                 )
