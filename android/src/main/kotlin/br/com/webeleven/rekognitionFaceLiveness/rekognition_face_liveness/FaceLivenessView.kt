@@ -7,6 +7,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.setViewTreeLifecycleOwner
+import com.amplifyframework.ui.liveness.model.FaceLivenessDetectionException
 import com.amplifyframework.ui.liveness.ui.FaceLivenessDetector
 import com.amplifyframework.ui.liveness.ui.LivenessColorScheme
 import io.flutter.plugin.platform.PlatformView
@@ -43,8 +44,20 @@ internal class FaceLivenessView(context: Context, id: Int, creationParams: Map<S
                         handler.onComplete()
                     },
                     onError = { error ->
-                        handler.onError()
-                        println(error.message)
+                        when (error) {
+                            is FaceLivenessDetectionException.SessionNotFoundException -> {
+                                handler.onError("sessionNotFound")
+                            }
+                            is FaceLivenessDetectionException.SessionTimedOutException -> {
+                                handler.onError("sessionTimedOut")
+                            }
+                            is FaceLivenessDetectionException.UserCancelledException -> {
+                                handler.onError("userCancelled")
+                            }
+                            else -> {
+                                handler.onError("error")
+                            }
+                        }
                     }
                 )
             }

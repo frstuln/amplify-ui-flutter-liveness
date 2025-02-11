@@ -43,8 +43,8 @@ class EventStreamHandler: EventChannel.StreamHandler {
     eventSink?.success("complete")
   }
 
-  fun onError() {
-    eventSink?.success("error")
+  fun onError(code: String) {
+    eventSink?.success(code)
   }
 
   override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
