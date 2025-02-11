@@ -21,7 +21,7 @@ class RekognitionFaceLivenessPlugin: FlutterPlugin {
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     val handler = EventStreamHandler()
-    eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "rekognition_face_liveness_event")
+    eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "face_liveness_event")
     eventChannel.setStreamHandler(handler)
 
     flutterPluginBinding
