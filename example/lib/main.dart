@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example appppp'),
         ),
         body: FaceLivenessDetector(
-          sessionId: '6fecad2e-7a4d-4a32-ae85-7fdcf5e6cc11',
+          sessionId: '32624a7f-e7fe-4355-85cf-2eccd049f746',
           region: 'us-east-1',
           onComplete: () {
             print('VINI: complete');
