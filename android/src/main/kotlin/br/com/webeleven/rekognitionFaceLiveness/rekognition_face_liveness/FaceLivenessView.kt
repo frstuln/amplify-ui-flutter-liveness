@@ -48,6 +48,12 @@ internal class FaceLivenessView(context: Context, id: Int, creationParams: Map<S
                             is FaceLivenessDetectionException.SessionNotFoundException -> {
                                 handler.onError("sessionNotFound")
                             }
+                            is FaceLivenessDetectionException.AccessDeniedException -> {
+                                handler.onError("accessDenied")
+                            }
+                            is FaceLivenessDetectionException.CameraPermissionDeniedException -> {
+                                handler.onError("cameraPermissionDenied")
+                            }
                             is FaceLivenessDetectionException.SessionTimedOutException -> {
                                 handler.onError("sessionTimedOut")
                             }
