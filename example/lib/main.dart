@@ -32,13 +32,13 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example appppp'),
         ),
         body: FaceLivenessDetector(
-          sessionId: '6fecad2e-7a4d-4a32-ae85-7fdcf5e6cc11',
+          sessionId: 'fff3c26b-a372-446b-b017-fefb7965b5d4',
           region: 'us-east-1',
           onComplete: () {
-            print('VINI: complete');
+            print('Face Liveness completed');
           },
-          onError: () {
-            print('VINI: error');
+          onError: (code) {
+            print('Face Liveness error $code');
           },
         ),
       ),

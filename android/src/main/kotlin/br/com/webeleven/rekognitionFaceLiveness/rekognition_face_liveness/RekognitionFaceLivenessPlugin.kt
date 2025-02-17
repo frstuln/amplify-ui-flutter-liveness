@@ -12,17 +12,16 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 /** RekognitionFaceLivenessPlugin */
-class RekognitionFaceLivenessPlugin: FlutterPlugin, MethodCallHandler {
+class RekognitionFaceLivenessPlugin: FlutterPlugin {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
-  private lateinit var channel : MethodChannel
   private lateinit var eventChannel : EventChannel
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     val handler = EventStreamHandler()
-    eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "rekognition_face_liveness_event")
+    eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "face_liveness_event")
     eventChannel.setStreamHandler(handler)
 
     flutterPluginBinding
@@ -31,20 +30,9 @@ class RekognitionFaceLivenessPlugin: FlutterPlugin, MethodCallHandler {
 
     Amplify.addPlugin(AWSCognitoAuthPlugin())
     Amplify.configure(flutterPluginBinding.applicationContext)
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "rekognition_face_liveness")
-    channel.setMethodCallHandler(this)
-  }
-
-  override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
-      result.notImplemented()
-    }
   }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-    channel.setMethodCallHandler(null)
   }
 }
 
@@ -55,8 +43,8 @@ class EventStreamHandler: EventChannel.StreamHandler {
     eventSink?.success("complete")
   }
 
-  fun onError() {
-    eventSink?.success("error")
+  fun onError(code: String) {
+    eventSink?.success(code)
   }
 
   override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
