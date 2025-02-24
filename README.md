@@ -17,6 +17,15 @@ Run:
 flutter pub get
 ```
 
+## 🛠️ Enable Swift Package Manager (SPM)
+
+This package uses Swift Package Manager (SPM). To enable it in your Flutter project, run:
+
+```sh
+flutter config --enable-swift-package-manager
+```
+
+
 ## ⚙️ Setup
 
 Before using the package, you need to configure **Amplify** in your project. Follow these steps:
