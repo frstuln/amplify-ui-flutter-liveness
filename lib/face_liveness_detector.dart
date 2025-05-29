@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -23,17 +24,31 @@ class FaceLivenessDetector extends StatefulWidget {
 
 class _FaceLivenessDetectorState extends State<FaceLivenessDetector> {
   final _eventChannel = EventChannel('face_liveness_event');
+  StreamSubscription? _subscription;
 
   @override
   void initState() {
     super.initState();
-    _eventChannel.receiveBroadcastStream().listen((event) {
+    _subscription = _eventChannel.receiveBroadcastStream().listen((event) {
+      print('Face Liveness event: $event');
       if (event == 'complete') {
         widget.onComplete?.call();
+      } else if (event == 'error') {
+        widget.onError?.call(event.toString());
       } else {
-        widget.onError?.call(event);
+        // Log other events for debugging
+        print('Face Liveness unknown event: $event');
       }
+    }, onError: (error) {
+      print('Face Liveness stream error: $error');
+      widget.onError?.call(error.toString());
     });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -50,12 +65,18 @@ class _FaceLivenessDetectorState extends State<FaceLivenessDetector> {
         },
         creationParamsCodec: const StandardMessageCodec(),
       );
+    } else if (Platform.isAndroid) {
+      return AndroidView(
+        viewType: 'face_liveness_view',
+        layoutDirection: TextDirection.ltr,
+        creationParams: {
+          'sessionId': widget.sessionId,
+          'region': widget.region
+        },
+        creationParamsCodec: const StandardMessageCodec(),
+      );
+    } else {
+      return const Center(child: Text('Unsupported platform'));
     }
-    return AndroidView(
-      viewType: 'face_liveness_view',
-      layoutDirection: TextDirection.ltr,
-      creationParams: {'sessionId': widget.sessionId, 'region': widget.region},
-      creationParamsCodec: const StandardMessageCodec(),
-    );
   }
 }

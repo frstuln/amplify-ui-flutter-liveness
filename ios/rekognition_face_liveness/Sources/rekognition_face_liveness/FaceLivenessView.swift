@@ -73,6 +73,9 @@ struct NativeView: View {
             sessionID: self.sessionId,
             region: self.region,
             isPresented: $isPresentingLiveness,
+            colorScheme: LivenessColorScheme(
+                primary: UIColor(red: 0.07, green: 0.71, blue: 0.78, alpha: 1.0) // #13B4C7
+            ),
             onCompletion: { result in
                 switch result {
                 case .success:

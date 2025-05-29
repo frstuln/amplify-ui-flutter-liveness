@@ -2,7 +2,7 @@ group = "br.com.webeleven.rekognitionFaceLiveness.rekognition_face_liveness"
 version = "1.0-SNAPSHOT"
 
 buildscript {
-    ext.kotlin_version = "1.8.22"
+    ext.kotlin_version = '1.9.22'
     repositories {
         google()
         mavenCentral()
@@ -27,7 +27,7 @@ apply plugin: "kotlin-android"
 android {
     namespace = "br.com.webeleven.rekognitionFaceLiveness.rekognition_face_liveness"
 
-    compileSdk = 35
+    compileSdkVersion 34
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -45,12 +45,13 @@ android {
     }
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 24
     }
 
     dependencies {
-        testImplementation("org.jetbrains.kotlin:kotlin-test")
-        testImplementation("org.mockito:mockito-core:5.0.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.mockito:mockito-core:5.0.0")
+    implementation 'androidx.lifecycle:lifecycle-livedata-core:2.8.3'
     }
 
     testOptions {
@@ -70,7 +71,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.8'
+        kotlinCompilerExtensionVersion '1.5.10'
     }
 }
 

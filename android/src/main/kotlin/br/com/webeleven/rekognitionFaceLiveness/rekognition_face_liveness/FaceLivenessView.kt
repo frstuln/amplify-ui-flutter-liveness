@@ -25,7 +25,7 @@ internal class FaceLivenessView(context: Context, id: Int, creationParams: Map<S
         composeView.setContent {
             MaterialTheme(
                 colorScheme = lightColorScheme(
-                    primary = Color(0xFFFFA500),
+                    primary = Color(0xFF13B4C7),
                     onPrimary = Color.White,
                     background = Color.White,
                     onBackground = Color(0xFF0D1926),
